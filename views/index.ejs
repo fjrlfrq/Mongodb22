@@ -1,11 +1,181 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-</html>
+<%- include('./partials/header.ejs') %>
+
+  <div class="card">
+
+    <div class="card-header">
+      <marquee scrollamount="8">
+        <h2>BREAD (Browse,Read,Edit,Add,Delete)</h2>
+      </marquee>
+    </div>
+
+    <div class="card-body">
+      <div class="container">
+        <form class="form-horizontal" method="get">
+          <input type="hidden" name="page" value="1" />
+          <input type="hidden" name="sortBy" value="id" />
+          <input type="hidden" name="sortMode" value="asc" />
+          <div class="form-group">
+            <label class="col-sm-2">
+              <input type="checkbox" name="stringc"> String
+            </label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="string" placeholder="String" value="<%= query.string %>">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2" for="integerc">
+              <input type="checkbox" name="integerc" id="integerc"> Integer
+            </label>
+            <div class="col-sm-10">
+              <input type="integer" class="form-control" placeholder="Integer" name="integer" id="integer">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2" for="floatc">
+              <input type="checkbox" name="floatc" id="floatc"> Float
+            </label>
+            <div class="col-sm-10">
+              <input type="real" class="form-control" placeholder="Float" name="float" id="float">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2" for="datenc">
+              <input type="checkbox" name="datenc" id="datenc"> Date
+            </label>
+            <div class="col-sm-10">
+              <input type="date" class="form-control" placeholder="date" name="daten" id="daten">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2" for="booleanc">
+              <input type="checkbox" name="booleanc" id="booleanc"> Boolean
+            </label>
+            <div class="col-sm-10">
+              <input type="boolean" class="form-control" placeholder="Choose the boolean.." name="boolean"
+                id="boolean">
+            </div>
+          </div>
+          <div>
+            <button type="submit" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <a href="/" class="btn btn-warning"><i class="fa-solid fa-rotate-left"></i></a>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="container">
+
+        <form method="post">
+          <table class="table table-striped" style="text-align: center;">
+            <thead>
+              <tr>
+                <th>
+                  <a
+                    href="<%= url.replace(`sortBy=${query.sortBy}`,`sortBy=_id`).replace(`sortMode=${query.sortMode}`,`sortMode=${query.sortMode == 'asc' ? 'desc' : 'asc'}`) %>">No
+                    &nbsp;<i
+                      class="fa-solid fa-<%= query.sortBy == '_id' ? query.sortMode == 'asc' ? 'sort-up' : 'sort-down' : 'sort' %>"></i>
+                  </a>
+                </th>
+                <th>
+                  <a
+                    href="<%= url.replace(`sortBy=${query.sortBy}`,`sortBy=string`).replace(`sortMode=${query.sortMode}`,`sortMode=${query.sortMode == 'asc' ? 'desc' : 'asc'}`) %>">String
+                    &nbsp;<i
+                      class="fa-solid fa-<%= query.sortBy == 'string' ? query.sortMode == 'asc' ? 'sort-up' : 'sort-down' : 'sort' %>"></i>
+                  </a>
+                </th>
+                <th>
+                  <a
+                    href="<%= url.replace(`sortBy=${query.sortBy}`,`sortBy=integer`).replace(`sortMode=${query.sortMode}`,`sortMode=${query.sortMode == 'asc' ? 'desc' : 'asc'}`) %>">Integer
+                    &nbsp;<i
+                      class="fa-solid fa-<%= query.sortBy == 'integer' ? query.sortMode == 'asc' ? 'sort-up' : 'sort-down' : 'sort' %>"></i>
+                  </a>
+                </th>
+                <th>
+                  <a
+                    href="<%= url.replace(`sortBy=${query.sortBy}`,`sortBy=float`).replace(`sortMode=${query.sortMode}`,`sortMode=${query.sortMode == 'asc' ? 'desc' : 'asc'}`) %>">Float
+                    &nbsp;<i
+                      class="fa-solid fa-<%= query.sortBy == 'float' ? query.sortMode == 'asc' ? 'sort-up' : 'sort-down' : 'sort' %>"></i>
+                  </a>
+                </th>
+                <th>
+                  <a
+                    href="<%= url.replace(`sortBy=${query.sortBy}`,`sortBy=daten`).replace(`sortMode=${query.sortMode}`,`sortMode=${query.sortMode == 'asc' ? 'desc' : 'asc'}`) %>">Date
+                    &nbsp;<i
+                      class="fa-solid fa-<%= query.sortBy == 'daten' ? query.sortMode == 'asc' ? 'sort-up' : 'sort-down' : 'sort' %>"></i>
+                  </a>
+                </th>
+                <th>
+                  <a
+                    href="<%= url.replace(`sortBy=${query.sortBy}`,`sortBy=boolean`).replace(`sortMode=${query.sortMode}`,`sortMode=${query.sortMode == 'asc' ? 'desc' : 'asc'}`) %>">Boolean
+                    &nbsp;<i
+                      class="fa-solid fa-<%= query.sortBy == 'boolean' ? query.sortMode == 'asc' ? 'sort-up' : 'sort-down' : 'sort' %>"></i>
+                  </a>
+                </th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% data.forEach((item, index)=> { %>
+                <tr>
+                  <td>
+                    <%= index + 1 + offset %>
+                  </td>
+                  <td>
+                    <%= item.string %>
+                  </td>
+                  <td>
+                    <%= item.integer %>
+                  </td>
+                  <td>
+                    <%= item.float %>
+                  </td>
+                  <td>
+                    <%= moment(item.daten).format('DD MMMM YYYY') %>
+                  </td>
+                  <td>
+                    <%= item.boolean %>
+                  </td>
+                  <td>
+                    <a href="/edit/<%= item._id %>" class="btn btn-success">
+                      <i class="fa-solid fa-pen"></i></button>
+                      <a href="/delete/<%= item._id %>" onclick="return confirm('Are you sure you wanna delete this ?')"
+                        class="btn btn-danger">
+                        <i class="fa-solid fa-trash"></i></button>
+                  </td>
+                </tr>
+                <% }) %>
+
+            </tbody>
+          </table>
+
+          <div class="col-md-10" style="position: flex; text-align: center;">
+            <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                <li class="page-item">
+                  <%if(page >= 1) {%>
+                    <a class="page-link" href="<%= url.replace(`page=${page}`,`page=${Number(page)-1}`) %>">Previous</a>
+                    <% } %>
+                </li>
+                <% for(let i=1 ; i <=pages; i++){ %>
+                  <li class="page-item <%= i == page ? ' active ' : '' %>">
+                    <a class="page-link" href="<%= url.replace(`page=${page}`,`page=${i}`) %>">
+                      <%= i%>
+                    </a>
+                  </li>
+                  <% } %>
+                    <li class="page-item">
+                      <%if(page <=pages && page <= pages) {%>
+                        <a class="page-link" href="<%= url.replace(`page=${page}`,`page=${Number(page)+1}`) %>">Next</a>
+                        <% } %>
+                    </li>
+              </ul>
+            </nav>
+          </div>
+
+          <div class="col-md-2" style="position: flex; text-align: end; padding-top: 5mm;">
+            <a href="/add" class="btn btn-info">Add</a>
+          </div>
+      </div>
+    </div>
+
+    <%- include('./partials/footer.ejs') %>

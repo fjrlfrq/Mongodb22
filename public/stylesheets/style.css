@@ -6,3 +6,41 @@ body {
 a {
   color: #00B7FF;
 }
+
+.container {
+  padding-top: 3rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.containers {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  margin-top: auto;
+  margin-bottom: auto;
+  border: 1px solid rgb(85, 80, 80);
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+input[type=checkbox] ,
+.form-control ,
+.pagination {
+  box-shadow: 0 3px 3px 0 rgba(0,0,0,0.2);
+}
+
+.btn {
+  border-radius: 1rem;
+  box-shadow: 0 4px 4px 0 rgba(0,0,0,0.2);
+} 
+
+th {
+  text-align: center;
+}
+
+.pagination li a {
+  font-size: 1.5rem;
+}
